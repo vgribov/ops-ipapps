@@ -20,4 +20,4 @@ project ("ops-ipapps")
 # Build ops-udpfwd daemon.
 add_subdirectory(udpfwd)
 # Build diagtools libraries.
-#add_subdirectory(diagtools/src/cli)
+add_subdirectory(diagtools/src/cli)
