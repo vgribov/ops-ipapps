@@ -163,6 +163,9 @@ bool udpfwd_module_init(void)
     /* dhcp-relay is enabled by default */
     udpfwd_ctrl_cb_p->dhcp_relay_enable = true;
 
+    /* UDP Broadcast Forwarder is disabled by default */
+    udpfwd_ctrl_cb_p->udp_bcast_fwd_enable = false;
+
     /* DB access semaphore initialization */
     retVal = sem_init(&udpfwd_ctrl_cb_p->waitSem, 0, 1);
     if (0 != retVal) {
@@ -461,6 +464,11 @@ static void udpfwd_interfaces_dump(struct ds *ds, struct dump_params *params)
     else
         ds_put_cstr(ds, "DHCP Relay is disabled\n");
 
+    if (udpfwd_ctrl_cb_p->udp_bcast_fwd_enable)
+        ds_put_cstr(ds, "UDP Broadcast Forwarder is enabled\n");
+    else
+        ds_put_cstr(ds, "UDP Broadcast Forwarder is disabled\n");
+
     if (!params->ifName) {
         /* dump all interfaces */
         SHASH_FOR_EACH(temp, &udpfwd_ctrl_cb_p->intfHashTable)
@@ -469,7 +477,7 @@ static void udpfwd_interfaces_dump(struct ds *ds, struct dump_params *params)
     else {
         node = shash_find(&udpfwd_ctrl_cb_p->intfHashTable, params->ifName);
         if (NULL == node) {
-            ds_put_format(ds, "No helper address configured on"
+            ds_put_format(ds, "No servers are configured on"
             " this interface :%s\n", params->ifName);
             return;
         }
@@ -691,6 +699,7 @@ bool udpfwd_init(const char *remote)
     /* Register for UDP_Bcast_Forwarder table updates */
     ovsdb_idl_add_table(idl, &ovsrec_table_udp_bcast_forwarder_server);
     ovsdb_idl_add_column(idl, &ovsrec_udp_bcast_forwarder_server_col_src_port);
+    ovsdb_idl_add_column(idl, &ovsrec_udp_bcast_forwarder_server_col_dest_vrf);
     ovsdb_idl_add_column(idl, &ovsrec_udp_bcast_forwarder_server_col_udp_dport);
     ovsdb_idl_add_column(idl,
                          &ovsrec_udp_bcast_forwarder_server_col_ipv4_ucast_server);
