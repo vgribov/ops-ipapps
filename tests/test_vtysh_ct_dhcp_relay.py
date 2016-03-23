@@ -65,8 +65,8 @@ def dhcp_relay_enable(dut01):
     dut01.DeviceInteract(command="end")
 
     cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
-    assert 'DHCP Relay Agent :enabled' in cmdOut, "Test to enable " \
-                                                  "dhcp-relay failed"
+    assert 'DHCP Relay Agent                 : enabled' in cmdOut, "Test " \
+        "to enable dhcp-relay failed"
 
     return True
 
@@ -81,8 +81,666 @@ def dhcp_relay_disable(dut01):
     dut01.DeviceInteract(command="end")
 
     cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
-    assert 'DHCP Relay Agent :disabled' in cmdOut, "Test to disable " \
-                                                   "dhcp-relay failed"
+    assert 'DHCP Relay Agent                 : disabled' in cmdOut, "Test " \
+        "to enable dhcp-relay failed"
+
+    return True
+
+
+def dhcp_relay_hop_count_increment_enable(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay \
+    hop-count-increment")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay hop-count " \
+        "increment failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'DHCP Request Hop Count Increment : enabled' in cmdOut, "Test " \
+        "to enable dhcp-relay hop-count increment failed"
+
+    return True
+
+
+def dhcp_relay_hop_count_increment_disable(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="no dhcp-relay \
+    hop-count-increment")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to disable dhcp-relay hop-count " \
+        "increment failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'DHCP Request Hop Count Increment : disabled' in cmdOut, "Test " \
+        "to disable dhcp-relay hop-count increment failed"
+
+    return True
+
+
+def dhcp_relay_option_82_enable(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' in cmdOut, "Test " \
+        "to enable dhcp-relay option 82 failed"
+
+    return True
+
+
+def dhcp_relay_option_82_validation_enable(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    validate")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 " \
+        "response validation failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Response validation              : enabled' in cmdOut, "Test " \
+        "to enable dhcp-relay option 82 response validation failed"
+
+    return True
+
+
+def relay_option_82_with_validation_and_replace(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    validate replace")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "validation and replace policy failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : replace' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with validation and " \
+        "replace policy failed"
+
+    return True
+
+
+def relay_option_82_with_validation_replace_and_mac_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    validate replace mac")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "validation, replace policy and mac remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "validation, replace policy and mac remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_validation_replace_and_ip_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    validate replace ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "validation, replace policy and ip remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "validation, replace policy and ip remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_validation_and_drop(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    validate drop")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "validation and drop policy failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : drop' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with validation and " \
+        "drop policy failed"
+
+    return True
+
+
+def relay_option_82_with_validation_drop_and_mac_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    validate drop mac")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "validation, drop policy and mac remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : drop' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "validation, drop policy and mac remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_validation_drop_and_ip_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    validate drop ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "validation, drop policy and ip remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : drop' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "validation, drop policy and ip remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_keep_policy(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    keep")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "keep policy failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : disabled' and \
+        'Option 82 handle policy          : keep' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with keep policy failed"
+
+    return True
+
+
+def relay_option_82_with_keep_and_mac_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    keep mac")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "keep policy and mac remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : disabled' and \
+        'Option 82 handle policy          : keep' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "keep policy and mac remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_keep_and_ip_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    keep ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "keep policy and ip remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : disabled' and \
+        'Option 82 handle policy          : keep' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "keep policy and ip remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_replace_policy(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "replace policy failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Option 82 handle policy          : replace' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with replace policy failed"
+
+    return True
+
+
+def relay_option_82_with_replace_and_mac_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace mac")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "replace policy and mac remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "replace policy and mac remote ID failed"
+
+    return True
+
+
+def relay_option_82_replace_with_mac_rid_validation(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace mac validation")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "replace policy, mac remote ID and validation failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "replace policy, mac remote ID and validation failed"
+
+    return True
+
+
+def relay_option_82_with_replace_and_ip_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "replace policy and ip remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "replace policy and ip remote ID failed"
+
+    return True
+
+
+def relay_option_82_replace_with_ip_rid_validation(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace ip validation")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "replace policy, ip remote ID and validation failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "replace policy, ip remote ID and validation failed"
+
+    return True
+
+
+def relay_option_82_with_replace_and_validation(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace validate")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        " replace policy and validation failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : replace' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with replace policy and " \
+        "validation failed"
+
+    return True
+
+
+def relay_option_82_with_replace_validation_and_mac_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace validate mac")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "replace policy, validation and mac remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "replace policy, validation and mac remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_replace_validation_and_ip_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace validate ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "replace policy, validation and ip remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "replace policy, validation and ip remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_drop_policy(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "drop policy failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Option 82 handle policy          : drop' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with drop policy failed"
+
+    return True
+
+
+def relay_option_82_with_drop_and_mac_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop mac")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "drop policy and mac remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Option 82 handle policy          : drop' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "drop policy and mac remote ID failed"
+
+    return True
+
+
+def relay_option_82_drop_with_mac_rid_validation(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop mac validate")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "drop policy, mac remote ID and validation failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : drop' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "drop policy, mac remote ID and validation failed"
+
+    return True
+
+
+def relay_option_82_with_drop_and_ip_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "drop policy and ip remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Option 82 handle policy          : drop' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "drop policy and ip remote ID failed"
+
+    return True
+
+
+def relay_option_82_drop_with_ip_rid_validation(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop ip validate")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "drop policy, ip remote ID and validation failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : drop' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "drop policy, ip remote ID and validation failed"
+
+    return True
+
+
+def relay_option_82_with_drop_and_validation(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop validate")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        " drop policy and validation failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : drop' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with drop policy and " \
+        "validation failed"
+
+    return True
+
+
+def relay_option_82_with_drop_validation_and_mac_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop validate mac")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "drop policy, validation and mac remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : drop' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "drop policy, validation and mac remote ID failed"
+
+    return True
+
+
+def relay_option_82_with_drop_validation_and_ip_rid(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop validate ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay option 82 with " \
+        "drop policy, validation and ip remote ID failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : enabled' and \
+        'Response validation              : enabled' and \
+        'Option 82 handle policy          : drop' and \
+        'Remote ID                        : ip' in cmdOut, "Test to " \
+        "enable dhcp-relay option 82 with " \
+        "drop policy, validation and ip remote ID failed"
+
+    return True
+
+
+def dhcp_relay_option_82_disable(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="no dhcp-relay option 82")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to disable dhcp-relay option 82 failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Option 82                        : disabled' and \
+        'Response validation              : disbled' and \
+        'Option 82 handle policy          : replace' and \
+        'Remote ID                        : mac' in cmdOut, "Test to " \
+        "disable dhcp-relay option 82 failed"
+
+    return True
+
+
+def dhcp_relay_option_82_validation_disable(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="no dhcp-relay option 82 \
+    validate")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to disable dhcp-relay option 82 " \
+        "response validation failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'Response validation              : disabled' in cmdOut, "Test " \
+        "to disable dhcp-relay option 82 response validation failed"
+
+    return True
+
+
+def show_dhcp_relay(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to enable dhcp-relay failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
+    assert 'DHCP Relay Agent                 : enabled' in cmdOut, "Test  " \
+        "to show dhcp-relay configuration failed"
 
     return True
 
@@ -98,24 +756,212 @@ def dhcp_relayRunningConfigTest(dut01):
 
     cmdOut = dut01.cmdVtysh(command="show running-config")
     assert 'no dhcp-relay' in cmdOut, "Test to show dhcp-relay in " \
-                                      "running config failed"
+        "running config failed"
 
     return True
 
 
-def show_dhcp_relay(dut01):
+def dhcp_relay_hopCountIncrementRunningConfigTest(dut01):
     if (enterConfigShell(dut01) is False):
         return False
 
-    devIntReturn = dut01.DeviceInteract(command="dhcp-relay")
+    devIntReturn = dut01.DeviceInteract(command="no dhcp-relay \
+    hop-count-increment")
     retCode = devIntReturn.get('returnCode')
-    assert retCode == 0, "Test to enable dhcp-relay failed"
+    assert retCode == 0, "Test to show dhcp-relay hop count increment "\
+        "in running config failed"
     dut01.DeviceInteract(command="end")
 
-    cmdOut = dut01.cmdVtysh(command="show dhcp-relay")
-    assert 'DHCP Relay Agent :enabled' in cmdOut, "Test to show " \
-                                                  "dhcp-relay " \
-                                                  "configuration failed"
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'no dhcp-relay hop-count-increment' in cmdOut, "Test to show "\
+        "dhcp-relay hop count increment in running config failed"
+
+    return True
+
+
+def relay_option82_dropRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 drop policy" \
+        "in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 drop' in cmdOut, "Test to show dhcp-relay " \
+        "option 82 drop policy running config failed"
+
+    return True
+
+
+def relay_option82_keepRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    keep")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 keep policy" \
+        "in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 keep' in cmdOut, "Test to show dhcp-relay " \
+        "option 82 keep policy running config failed"
+
+    return True
+
+
+
+def relay_option82_replaceRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 replace policy" \
+        "in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 replace' in cmdOut, "Test to show " \
+        "dhcp-relay option 82 replace policy running config failed"
+
+    return True
+
+
+def relay_option82_replace_with_validationRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace validate")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 replace policy" \
+        "with validation in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 replace validate' in cmdOut, "Test to " \
+        "show dhcp-relay option 82 replace policy with " \
+        "validation running config failed"
+
+    return True
+
+
+def relay_option82_drop_with_validationRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop validate")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 drop policy" \
+        "with validation in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 drop validate' in cmdOut, "Test to " \
+        "show dhcp-relay option 82 drop policy with " \
+        "validation running config failed"
+
+    return True
+
+def relay_option82_keep_with_ip_ridRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    keep ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 keep policy" \
+        "with ip remote id in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 keep ip' in cmdOut, "Test to " \
+        "show dhcp-relay option 82 keep policy with " \
+        "ip remote id running config failed"
+
+    return True
+
+
+def relay_option82_replace_with_ip_ridRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 replace policy" \
+        "with ip remote id in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 replace ip' in cmdOut, "Test to " \
+        "show dhcp-relay option 82 replace policy with " \
+        "ip remote id running config failed"
+
+    return True
+
+
+def relay_option82_drop_with_ip_ridRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 drop policy" \
+        "with ip remote id in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 drop ip' in cmdOut, "Test to " \
+        "show dhcp-relay option 82 drop policy with " \
+        "ip remote id running config failed"
+
+    return True
+
+
+def relay_option82_replace_validation_ip_ridRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    replace validate ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 replace policy" \
+        "with validatio and ip remote id in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 replace validate ip' in cmdOut, "Test " \
+        "to show dhcp-relay option 82 replace policy with " \
+        "validation and ip remote id running config failed"
+
+    return True
+
+
+def relay_option82_drop_validation_ip_ridRunningConfigTest(dut01):
+    if (enterConfigShell(dut01) is False):
+        return False
+
+    devIntReturn = dut01.DeviceInteract(command="dhcp-relay option 82 \
+    drop validate ip")
+    retCode = devIntReturn.get('returnCode')
+    assert retCode == 0, "Test to show dhcp-relay option 82 drop policy" \
+        "with validatio and ip remote id in running config failed"
+    dut01.DeviceInteract(command="end")
+
+    cmdOut = dut01.cmdVtysh(command="show running-config")
+    assert 'dhcp-relay option 82 drop validate ip' in cmdOut, "Test to " \
+        "show dhcp-relay option 82 drop policy with " \
+        "validation and ip remote id running config failed"
 
     return True
 
@@ -617,6 +1463,280 @@ class Test_dhcp_relay_configuration:
         else:
             LogOutput('error', "Disable DHCP-Relay - failed")
 
+    def test_dhcp_relay_hop_count_increment_enable(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = dhcp_relay_hop_count_increment_enable(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay hop count " \
+                              "increment - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay hop count " \
+                               "increment - failed")
+
+    def test_dhcp_relay_option_82_enable(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = dhcp_relay_option_82_enable(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 - passed")
+        else:
+            LogOutput('error', "Enable DDHCP-Relay option 82 - failed")
+
+    def test_dhcp_relay_option_82_validation_enable(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = dhcp_relay_option_82_validation_enable(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 hop count " \
+                              "validation - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 hop count " \
+                               "validation - failed")
+
+    def test_relay_option_82_with_validation_and_replace(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_validation_and_replace(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 validation with " \
+                              "replace policy - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 validation with " \
+                               "replace policy - failed")
+
+    def test_relay_option_82_with_validation_replace_and_mac_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_validation_replace_and_mac_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 validation with " \
+                              "replace policy and mac remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 validation with " \
+                               "replace policy and mac remote ID - failed")
+
+    def test_relay_option_82_with_validation_replace_and_ip_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_validation_replace_and_ip_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 validation with " \
+                              "replace policy and ip remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 validation with " \
+                               "replace policy and ip remote ID - failed")
+
+    def test_relay_option_82_with_validation_and_drop(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_validation_and_drop(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 validation with " \
+                              "drop policy - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 validation with " \
+                               "drop policy - failed")
+
+    def test_relay_option_82_with_validation_drop_and_mac_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_validation_drop_and_mac_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 validation with " \
+                              "drop policy and mac remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 validation with " \
+                               "drop policy and mac remote ID - failed")
+
+    def test_relay_option_82_with_validation_drop_and_ip_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_validation_drop_and_ip_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 validation with " \
+                              "drop policy and ip remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 validation with " \
+                               "drop policy and ip remote ID - failed")
+
+    def test_relay_option_82_with_keep_policy(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_keep_policy(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "keep policy - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "keep policy - failed")
+
+    def test_relay_option_82_with_keep_and_mac_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_keep_and_mac_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "keep policy and mac remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "keep policy and mac remote ID - failed")
+
+    def test_relay_option_82_with_keep_and_ip_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_keep_and_ip_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "keep policy and ip remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "keep policy and ip remote ID - failed")
+
+    def test_relay_option_82_with_replace_policy(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_replace_policy(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "replace policy - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "replace policy - failed")
+
+    def test_relay_option_82_with_replace_and_mac_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_replace_and_mac_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "replace policy and mac remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "replace policy and mac remote ID - failed")
+
+    def test_relay_option_82_with_replace_and_ip_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_replace_and_ip_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "replace policy and ip remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "replace policy and ip remote ID - failed")
+
+    def test_relay_option_82_with_replace_and_validation(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_replace_and_validation(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "replace policy and validation - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "replace policy and validation - failed")
+
+    def test_relay_option_82_with_replace_validation_and_mac_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_replace_validation_and_mac_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "replace policy, validation and mac " \
+                              "remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "replace policy, validation and mac " \
+                               " remote ID - failed")
+
+    def test_relay_option_82_with_replace_validation_and_ip_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_replace_validation_and_ip_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "replace policy, validation and ip " \
+                              "remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "replace policy, validation and ip " \
+                               " remote ID - failed")
+
+    def test_relay_option_82_with_drop_policy(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_drop_policy(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "drop policy - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "drop policy - failed")
+
+    def test_relay_option_82_with_drop_and_mac_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_keep_and_mac_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "drop policy and mac remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "drop policy and mac remote ID - failed")
+
+    def test_relay_option_82_with_drop_and_ip_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_drop_and_ip_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "drop policy and ip remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "drop policy and ip remote ID - failed")
+
+    def test_relay_option_82_with_drop_and_validation(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_drop_and_validation(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "drop policy and validation - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "drop policy and validation - failed")
+
+    def test_relay_option_82_with_drop_validation_and_mac_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_drop_validation_and_mac_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "drop policy, validation and mac " \
+                              "remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "drop policy, validation and mac " \
+                               " remote ID - failed")
+
+    def test_relay_option_82_with_drop_validation_and_ip_rid(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option_82_with_drop_validation_and_ip_rid(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Enable DHCP-Relay option 82 with " \
+                              "drop policy, validation and ip " \
+                              "remote ID - passed")
+        else:
+            LogOutput('error', "Enable DHCP-Relay option 82 with " \
+                               "drop policy, validation and ip " \
+                               " remote ID - failed")
+
+    def test_dhcp_relay_hop_count_increment_disable(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = dhcp_relay_hop_count_increment_disable(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Disable DHCP-Relay option 82 hop count " \
+                              "validation - passed")
+        else:
+            LogOutput('error', "Disable DHCP-Relay option 82 hop count " \
+                               "validation - failed")
+
+    def test_dhcp_relay_option_82_disable(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = dhcp_relay_option_82_disable(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Disable DHCP-Relay option 82 - passed")
+        else:
+            LogOutput('info', "Disable DHCP-Relay option 82 - failed")
+
+    def test_dhcp_relay_option_82_validation_disable(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = dhcp_relay_option_82_validation_disable(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Disable DHCP-Relay option 82 hop count " \
+                              "validation - passed")
+        else:
+            LogOutput('error', "Disable DHCP-Relay option 82 hop count " \
+                               "validation - failed")
+
     def test_show_dhcp_relay(self):
         dut01Obj = self.topoObj.deviceObjGet(device="dut01")
         retValue = show_dhcp_relay(dut01Obj)
@@ -634,6 +1754,127 @@ class Test_dhcp_relay_configuration:
         else:
             LogOutput('error', "Show DHCP-Relay "
                                "running configuration - failed")
+
+    def test_dhcp_relay_hopCountIncrementRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = dhcp_relay_hopCountIncrementRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay hop count increment"
+                              "running configuration - passed")
+        else:
+            LogOutput('error', "DHCP-Relay hop count increment "
+                               "running configuration - failed")
+
+    def test_relay_option82_dropRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option82_dropRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with drop policy "
+                              "running configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with drop policy "
+                               "running configuration - failed")
+
+    def test_relay_option82_keepRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option82_keepRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with keep policy "
+                              "running configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with keep policy "
+                               "running configuration - failed")
+
+    def test_relay_option82_replaceRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = relay_option82_replaceRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with replace policy "
+                              "running configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with replace policy "
+                               "running configuration - failed")
+
+    def test_relay_option82_replace_with_validationRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = \
+            relay_option82_replace_with_validationRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with replace policy and "
+                              "validation running configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with replace policy and "
+                               "validation running configuration - failed")
+
+    def test_relay_option82_drop_with_validationRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = \
+            relay_option82_drop_with_validationRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with drop policy and "
+                              "validation running configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with drop policy and "
+                               "validation running configuration - failed")
+
+    def test_relay_option82_keep_with_ip_ridRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = \
+            relay_option82_keep_with_ip_ridRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with keep policy and "
+                              "ip remote id running configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with keep policy and "
+                               "ip remote id running configuration - failed")
+
+    def test_relay_option82_replace_with_ip_ridRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = \
+            relay_option82_replace_with_ip_ridRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with replace policy and "
+                              "ip remote id running configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with replace policy and "
+                               "ip remote id running configuration - failed")
+
+    def test_relay_option82_drop_with_ip_ridRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = \
+            relay_option82_drop_with_ip_ridRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with drop policy and "
+                              "ip remote id running configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with drop policy and "
+                               "ip remote id running configuration - failed")
+
+    def test_relay_option82_replace_validation_ip_ridRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = \
+            relay_option82_replace_validation_ip_ridRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with replace policy, "
+                              "validation and ip remote id running "
+                              "configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with replace policy, "
+                               "validation and ip remote id running "
+                               "configuration -- failed")
+
+    def test_relay_option82_drop_validation_ip_ridRunningConfigTest(self):
+        dut01Obj = self.topoObj.deviceObjGet(device="dut01")
+        retValue = \
+            relay_option82_drop_validation_ip_ridRunningConfigTest(dut01Obj)
+        if(retValue):
+            LogOutput('info', "Show DHCP-Relay with drop policy, "
+                              "validation and ip remote id running "
+                              "configuration - passed")
+        else:
+            LogOutput('error', "Show DHCP-Relay with drop policy, "
+                               "validation and ip remote id running "
+                               "configuration -- failed")
 
     def test_helper_addressConfigurationFor_unicastServerIp(self):
         dut01Obj = self.topoObj.deviceObjGet(device="dut01")

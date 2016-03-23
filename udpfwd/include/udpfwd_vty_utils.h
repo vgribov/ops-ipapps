@@ -69,6 +69,10 @@ extern int8_t
 udpfwd_helperaddressconfig (udpfwd_server *, bool);
 extern int8_t
 udpfwd_serverconfig (udpfwd_server *, bool);
+extern int32_t
+show_dhcp_relay_config (void);
+extern int8_t
+dhcp_relay_config (uint16_t, FEATURE_CONFIG *);
 extern int8_t
 show_ip_helper_address_config (const char *);
 extern int8_t
