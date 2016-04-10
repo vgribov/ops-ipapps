@@ -36,6 +36,8 @@
     - [Disable dhcp-relay option 82](#disable-dhcp-relay-option-82)
     - [Disable dhcp-relay option 82 validation](#disable-dhcp-relay-option-82-validation)
     - [Verify DHCP relay status](#verify-dhcp-relay-status)
+    - [Verify DHCP relay statistics](#verify-dhcp-relay-statistics)
+    - [Verify DHCP relay option 82 statistics](#verify-dhcp-relay-option-82-statistics)
     - [Verify DHCP relay configuration status in show running-configuration](#verify-dhcp-relay-configuration-status-in-show-running-configuration)
     - [Verify DHCP relay hop-count-increment status in show running-configuration](#verify-dhcp-relay-hop-count-increment-configuration-status-in-show-running-configuration)
     - [Verify DHCP relay option 82 with validation configuration status in show running-configuration](#verify-dhcp-relay-option-82-with-validation-configuration-status-in-show-running-configuration)
@@ -528,6 +530,24 @@ Verify the DHCP relay status using the `show dhcp-relay` command.
 Verify the current dhcp-relay status is reflected in the `show dhcp-relay` command.
 #### Test fail criteria
 Verify the current dhcp-relay status is not reflected in the `show dhcp-relay` command.
+
+### Verify DHCP relay statistics
+### Description
+Verify the DHCP relay statistics using the `show dhcp-relay` command.
+### Test result criteria
+#### Test pass criteria
+Verify the dhcp-relay statistics is reflected in the `show dhcp-relay` command.
+#### Test fail criteria
+Verify the dhcp-relay statistics is not reflected in the `show dhcp-relay` command.
+
+### Verify DHCP relay option 82 statistics
+### Description
+Verify the DHCP relay option 82 statistics using the `show dhcp-relay` command.
+### Test result criteria
+#### Test pass criteria
+Verify the dhcp-relay option 82 statistics is reflected in the `show dhcp-relay` command.
+#### Test fail criteria
+Verify the dhcp-relay option 82 statistics is not reflected in the `show dhcp-relay` command.
 
 ### Verify DHCP relay post reboot
 ### Description
