@@ -15,7 +15,7 @@
 
 cmake_minimum_required (VERSION 2.8)
 
-set (RELAY ops-udpfwd)
+set (RELAY ops-relay)
 project (${RELAY})
 set (COMMON_SRC_DIR common)
 set (UDPFWD_SRC_DIR udpfwd/src)
@@ -35,7 +35,7 @@ include_directories (${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/${INCL_DIR}
 
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -D FTR_UDP_BCAST_FWD=1 -D FTR_DHCP_RELAY=1")
 
-# Source files to build ops-udpfwd
+# Source files to build ops-relay
 set (SOURCES ${COMMON_SRC_DIR}/relay_main.c
              ${UDPFWD_SRC_DIR}/udpfwd.c
              ${UDPFWD_SRC_DIR}/udpfwd_config.c
@@ -45,7 +45,7 @@ set (SOURCES ${COMMON_SRC_DIR}/relay_main.c
              ${UDPFWD_SRC_DIR}/dhcp_options.c
              ${DHCPV6R_SRC_DIR}/dhcpv6_relay.c)
 
-# Rules to build ops-udpfwd
+# Rules to build ops-relay
 add_executable (${RELAY} ${SOURCES})
 target_link_libraries (${RELAY} ${OVSCOMMON_LIBRARIES}
                        ${OVSDB_LIBRARIES}
@@ -54,6 +54,6 @@ target_link_libraries (${RELAY} ${OVSCOMMON_LIBRARIES}
 # Build ops-udpfwd cli shared libraries.
 add_subdirectory(${UDPFWD_SRC_DIR}/cli)
 
-# Rules to install ops-udpfwd binary in rootfs
+# Rules to install ops-relay binary in rootfs
 install(TARGETS ${RELAY}
     RUNTIME DESTINATION bin)
