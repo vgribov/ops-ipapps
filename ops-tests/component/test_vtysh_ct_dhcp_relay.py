@@ -605,7 +605,18 @@ def helper_address_configuration_for_unicast_server_ip(sw1):
 def helper_address_configuration_on_split_interface(sw1):
     sw1("configure terminal")
     sw1("interface 50")
-    sw1("split \n y")
+    sw1._shells['vtysh']._prompt = (
+        '.*Do you want to continue [y/n]?'
+    )
+
+    sw1('split')
+
+    sw1._shells['vtysh']._prompt = (
+        '(^|\n)switch(\\([\\-a-zA-Z0-9]*\\))?#'
+    )
+
+    sw1('y')
+    sw1(' ')
     sw1("interface 50-4")
     sw1("ip helper-address 192.168.80.1")
     sw1("end")

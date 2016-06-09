@@ -171,9 +171,21 @@ def forward_protocol_configure_sub_interface(sw1):
 
 
 def forward_protocol_configure_split_interface(sw1):
-    sw1('configure terminal')
-    interface = 54-4  # split-interface
-    sw1('interface %s' % interface)
+    sw1("configure terminal")
+    sw1("interface 50")
+    sw1._shells['vtysh']._prompt = (
+        '.*Do you want to continue [y/n]?'
+    )
+
+    sw1('split')
+
+    sw1._shells['vtysh']._prompt = (
+        '(^|\n)switch(\\([\\-a-zA-Z0-9]*\\))?#'
+    )
+
+    sw1('y')
+    sw1(' ')
+    sw1("interface 50-4")
 
     cmd = "ip forward-protocol udp 10.0.1.11 137"
     sw1(cmd)
