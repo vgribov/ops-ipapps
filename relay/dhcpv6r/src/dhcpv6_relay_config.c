@@ -645,7 +645,9 @@ void dhcpv6r_handle_config_change(
     {
         intfNode = (DHCPV6_RELAY_INTERFACE_NODE_T *)node->data;
     }
+/* FIXME: This will be removed after the schema changes got merged. */
 
+#if 0
     /* If no change in both colmns return */
     if (!(OVSREC_IDL_IS_COLUMN_MODIFIED(ovsrec_dhcp_relay_col_ipv6_ucast_server,
                                    idl_seqno)) &&
@@ -654,6 +656,7 @@ void dhcpv6r_handle_config_change(
     {
         return;
     }
+#endif
 
     if (OVSREC_IDL_IS_COLUMN_MODIFIED(ovsrec_dhcp_relay_col_ipv6_ucast_server,
                                idl_seqno)) {

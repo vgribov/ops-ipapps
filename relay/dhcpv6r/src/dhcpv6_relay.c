@@ -346,9 +346,11 @@ bool dhcpv6r_init()
                         &ovsrec_dhcp_relay_col_vrf);
     ovsdb_idl_add_column(idl,
                         &ovsrec_dhcp_relay_col_ipv6_ucast_server);
+    /* FIXME: This will be removed after schema changes got merged. */
+#if 0
     ovsdb_idl_add_column(idl,
                         &ovsrec_dhcp_relay_col_ipv6_mcast_server);
-
+#endif
     /* Register for port table for dhcp_relay_statistics update */
     ovsdb_idl_add_table(idl, &ovsrec_table_port);
     ovsdb_idl_add_column(idl, &ovsrec_port_col_name);
