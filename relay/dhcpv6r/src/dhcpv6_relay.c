@@ -64,10 +64,6 @@
 
 #ifdef FTR_DHCPV6_RELAY
 
-/* FIXME: Temporary addition. Once macro is merged following shall be removed */
-#define SYSTEM_DHCP_CONFIG_MAP_V6RELAY_ENABLED    "v6relay_enabled"
-#define SYSTEM_DHCP_CONFIG_MAP_V6RELAY_OPTION79_ENABLED "dhcpv6_relay_option79_enabled"
-
 /*
  * Global variable declarations.
  */
@@ -121,9 +117,10 @@ bool dhcpv6r_module_init(void)
 void dhcpv6r_process_globalconfig_update(void)
 {
     const struct ovsrec_system *system_row = NULL;
-
+#if 0 /* Enable this code once keys are pushed */
     bool dhcpv6_relay_enabled = false, dhcpv6_relay_option79 = false;
     char *value;
+#endif
 
     system_row = ovsrec_system_first(idl);
     if (NULL == system_row) {
@@ -136,7 +133,7 @@ void dhcpv6r_process_globalconfig_update(void)
     {
         return;
     }
-
+#if 0 /* Enable this code once keys are pushed */
     /* Check if dhcpv6-relay global configuration is changed */
     if (OVSREC_IDL_IS_COLUMN_MODIFIED(ovsrec_system_col_dhcp_config,
                                    idl_seqno)) {
@@ -168,6 +165,7 @@ void dhcpv6r_process_globalconfig_update(void)
             dhcpv6_relay_ctrl_cb_p->dhcpv6_relay_option79_enable = dhcpv6_relay_option79;
         }
     }
+#endif
     return;
 }
 
