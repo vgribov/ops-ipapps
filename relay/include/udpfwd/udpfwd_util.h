@@ -32,7 +32,7 @@
 #include <netinet/ip.h>
 #include <netinet/udp.h>
 
-#define MAX_UINT32 4294967295 /*255.255.255.255.255 */
+#define MAX_UINT32 4294967295U /*255.255.255.255.255 */
 
 /* Function to retrieve lowest IP address from interface name. */
 IP_ADDRESS getLowestIpOnInterface(char *ifName);
