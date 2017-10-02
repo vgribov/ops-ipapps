@@ -392,6 +392,7 @@ DHCPV6_RELAY_INTERFACE_NODE_T *dhcpv6r_create_intferface_node(char *pname)
     if (NULL == intfNode->portName)
     {
        VLOG_ERR("Failed to allocate memory for portName : %s", pname);
+       free(intfNode);
        return NULL;
     }
 
